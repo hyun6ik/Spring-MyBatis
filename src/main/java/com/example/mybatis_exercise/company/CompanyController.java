@@ -1,9 +1,9 @@
 package com.example.mybatis_exercise.company;
 
 import com.example.mybatis_exercise.mapper.CompanyMapper;
+import com.example.mybatis_exercise.mapper.EmployeeMapper;
 import com.example.mybatis_exercise.response.Result;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyMapper companyMapper;
+    private final CompanyService companyService;
 
     @PostMapping("")
     public Result<Company> post(@RequestBody Company company){
@@ -31,5 +32,11 @@ public class CompanyController {
     public Result<Company> findById(@PathVariable("id") int id){
         Company result = companyMapper.findById(id);
         return new Result(result);
+    }
+
+    @GetMapping("/employee")
+    public Result<List<Company>> findAllCompanyAndEmployee(){
+        List<Company> collect = companyService.findAll();
+        return new Result(collect);
     }
 }
